@@ -3,21 +3,23 @@ import { Users } from "../../dummyData";
 import OnlineUser from "../onlineUser/OnlineUser";
 export default function Rightbar({ profile }) {
   const HomeRightBar = () => {
-    <>
-      <div className="birthdayContainer">
-        <img src="assets/gift.png" className="birthdayImg" alt="" />
-        <span className="birthdayText">
-          <b>Pola Foster</b> and <b>3 other friends</b> have a birthday today.
-        </span>
-      </div>
-      <img src="assets/ad.png" alt="" className="rightbarAd" />
-      <h4 className="rightbarTitle">Online Friends</h4>
-      <ul className="rightbarFriendList">
-        {Users.map((user) => (
-          <OnlineUser key={user.id} user={user} />
-        ))}
-      </ul>
-    </>;
+    return (
+      <>
+        <div className="birthdayContainer">
+          <img src="assets/gift.png" className="birthdayImg" alt="" />
+          <span className="birthdayText">
+            <b>Pola Foster</b> and <b>3 other friends</b> have a birthday today.
+          </span>
+        </div>
+        <img src="assets/ad.png" alt="" className="rightbarAd" />
+        <h4 className="rightbarTitle">Online Friends</h4>
+        <ul className="rightbarFriendList">
+          {Users.map((user) => (
+            <OnlineUser key={user.id} user={user} />
+          ))}
+        </ul>
+      </>
+    );
   };
 
   const ProfileRightBar = () => {
