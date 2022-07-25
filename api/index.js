@@ -26,7 +26,12 @@ app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
 
+// Routes
+const userRoute = require("./routes/users"),
+  authRoute = require("./routes/auth");
 
+app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
 
 // start the express app on port 8800
 app.listen(8800, () => {
