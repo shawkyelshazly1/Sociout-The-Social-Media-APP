@@ -46,14 +46,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Update user route
 
-// Delete user route
-
-// Get a single user route
-
-// Follow user route
-
-// UnFollow user route
 
 module.exports = router;
