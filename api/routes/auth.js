@@ -22,11 +22,38 @@ router.post("/register", async (req, res) => {
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (err) {
-    console.log(err);
+    res.status(500).json(err);
   }
 });
 
+// Login Route
+router.post("/login", async (req, res) => {
+  try {
+    // looking up user in DB
+    const user = await User.findOne({ email: req.body.email });
+    !user && res.status(404).json("User not found!");
 
+    // validating password
+    const validPassword = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    !validPassword && res.status(400).json("Wrong password!");
 
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Update user route
+
+// Delete user route
+
+// Get a single user route
+
+// Follow user route
+
+// UnFollow user route
 
 module.exports = router;
