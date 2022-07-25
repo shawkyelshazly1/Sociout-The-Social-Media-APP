@@ -1,15 +1,24 @@
 import "./post.css";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import { Users } from "../../dummyData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "../../axios";
+import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 
 export default function Post({ post }) {
-  const user = Users.filter((user) => user.id === post.userId)[0];
-
   // setting states for likes count & like func...
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`users/?userId=${post.userId}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [post.userId]);
 
   // like/dislike function handler
   const likeHandler = () => {
@@ -22,29 +31,35 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <img src={user.profilePicture} className="postProfileImg" alt="" />
+            <Link to={`profile/${user.username}`}>
+              <img
+                src={user.profilePicture || "/assets/person/noAvatar.png"}
+                className="postProfileImg"
+                alt=""
+              />
+            </Link>
             <span className="postUsername">{user.username}</span>
-            <span className="postDate">{post.date}</span>
+            <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVertIcon />
           </div>
         </div>
         <div className="postCenter">
-          <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={post.photo} alt="" />
+          <span className="postText">{post?.description}</span>
+          <img className="postImg" src={post.img} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
             <img
               className="likeIcon"
-              src="assets/like.png"
+              src="/assets/like.png"
               onClick={likeHandler}
               alt=""
             />
             <img
               className="likeIcon"
-              src="assets/heart.png"
+              src="/assets/heart.png"
               onClick={likeHandler}
               alt=""
             />
