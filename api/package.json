@@ -4,7 +4,7 @@
   "description": "The rest api for the Sociout app",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js --ignore client"
   },
   "repository": {
     "type": "git",
