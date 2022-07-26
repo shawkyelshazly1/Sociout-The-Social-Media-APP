@@ -2,7 +2,8 @@ const express = require("express"),
   helmet = require("helmet"),
   mongoose = require("mongoose"),
   morgan = require("morgan"),
-  dotenv = require("dotenv");
+  dotenv = require("dotenv"),
+  cors = require("cors");
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ mongoose.connect(
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
+app.use(cors());
 
 // Routes
 const userRoute = require("./routes/users"),

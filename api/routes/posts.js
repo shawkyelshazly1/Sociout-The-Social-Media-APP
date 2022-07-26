@@ -72,9 +72,9 @@ router.get("/:id", async (req, res) => {
 });
 
 // Get Timeline posts
-router.get("/", async (req, res) => {
+router.get("/timeline/:userId", async (req, res) => {
   try {
-    const currentUser = await User.findById(req.body.userId);
+    const currentUser = await User.findById(req.params.userId);
     const userPosts = await Post.find({ userId: currentUser.id });
     const friendsPosts = await Promise.all(
       currentUser.followings.map((friendId) => {
@@ -82,6 +82,17 @@ router.get("/", async (req, res) => {
       })
     );
     return res.status(200).json(userPosts.concat(...friendsPosts));
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+});
+
+// Get A Single User posts
+router.get("/profile/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    const posts = await Post.find({ userId: user._id });
+    return res.status(200).json(posts);
   } catch (error) {
     return res.status(500).json(error);
   }

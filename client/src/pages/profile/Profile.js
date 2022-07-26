@@ -10,6 +10,7 @@ import { useParams } from "react-router";
 export default function Profile() {
   const [user, setUser] = useState({});
   const { username } = useParams();
+
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`users/?username=${username}`);
